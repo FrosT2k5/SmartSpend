@@ -4,8 +4,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Main from './routes/Main';
-import Dashboard, { dashboardLoader } from './routes/Dashboard';
+import DashboardLoader, { dashboardLoader } from './routes/DashboardLoader';
 import Error from './routes/Error';
+import SignUp from './routes/SignUp';
+import Login from './routes/Login';
 
 const router = createBrowserRouter([
   {
@@ -15,13 +17,20 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: <DashboardLoader />,
         loader: dashboardLoader,
+        errorElement: <Error />,
       },
-      // {
-      //   path: "logout",
-      //   action: logoutAction
-      // }
+      {
+        path: "signup",
+        element: <SignUp />,
+        errorElement: <Error />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+        errorElement: <Error />,
+      },
     ]
   },
 ]);

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nokora:wght@400;700;900&display=swap');
+
+body {
+    background-color: #EDEFF1;
+    /* font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal; */
+    font-family: "Nokora", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+main {
+
+}

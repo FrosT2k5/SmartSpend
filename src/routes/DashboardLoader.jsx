@@ -7,13 +7,19 @@ export function dashboardLoader() {
   return { userName };
 }
 
-function Dashboard() {
+
+function Dashboard( {userName} ) {
+  return <>
+    DashBoard, { userName }
+  </>
+}
+function DashboardLoader() {
   const { userName } = useLoaderData();
   return (
     <>
-        {userName ? (<div>Dashboard, {userName}</div>) : <Intro /> }
+        {userName ? <Dashboard userName={userName}/> : <Intro /> }
     </>
   )
 }
 
-export default Dashboard
+export default DashboardLoader
