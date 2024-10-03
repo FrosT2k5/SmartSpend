@@ -2,7 +2,7 @@ import React from 'react';
 import classes from "./css/intro.module.css";
 import { Form, Link } from 'react-router-dom';
 
-function Signup() {
+function SignUp() {
   return (
     <div className={classes.intro}>
       <img src='/signup-illustration.png' className={classes.signupIllustration} alt="Signup Illustration" />
@@ -13,7 +13,7 @@ function Signup() {
             className={`${classes.bold} ${classes.headingText} ${classes.mtb_3}`}
             style={{ marginTop: "15px" }}
           >
-            Welcome!
+            Get Started!
           </h1>
           <h1 className={`${classes.bold} ${classes.mtb_3}`}>SIGN UP</h1>
 
@@ -21,11 +21,11 @@ function Signup() {
           <input type='text' name='userName' />
 
           <p>Current Balance</p>
-          <span>₹</span>
+          <span style={{ marginRight: '8px' }}>₹</span>
           <input type='number' name='currentBalance' />
 
           <p>Monthly Salary</p>
-          <span>₹</span>
+          <span style={{ marginRight: '8px' }}>₹</span>
           <input type='number' name='monthlySalary' />
 
           <p>Password</p>
@@ -44,4 +44,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignUp;
