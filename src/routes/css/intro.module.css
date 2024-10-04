@@ -23,7 +23,7 @@
 }
 
 .intro {
-    display: flex;
+    margin-top: 10px;
     align-items: center;
     height: 92vh;
 }
