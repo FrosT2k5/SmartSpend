@@ -1,23 +1,24 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
 import { useLoaderData } from 'react-router-dom';
 import Intro from './Intro';
+import { getUser } from '../api/apiutils';
 
-export function dashboardLoader() {
-  const userName = "";
-  return { userName };
+export async function dashboardLoader() {
+  const userData  = await getUser();
+  return userData;
 }
 
-
-function Dashboard( {userName} ) {
-  return <>
-    DashBoard, { userName }
+function Dashboard( {userData} ) {
+  return <>redirect
+    DashBoard, { userData.username }
   </>
 }
+
 function DashboardLoader() {
-  const { userName } = useLoaderData();
+  const userData = useLoaderData();
   return (
     <>
-        {userName ? <Dashboard userName={userName}/> : <Intro /> }
+        {userData ? <Dashboard userData={userData}/> : <Intro /> }
     </>
   )
 }

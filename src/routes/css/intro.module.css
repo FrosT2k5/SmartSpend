@@ -23,7 +23,7 @@
 }
 
 .intro {
-    display: flex;
+    margin-top: 10px;
     align-items: center;
     height: 92vh;
 }
@@ -95,9 +95,11 @@
 .loginForm input {
     background-color: #DEECFF;
     border-style: none;
-    border-radius: 15px;
+    border-radius: 30px;
     width: 60%;
     font-size: 16px;
+    padding: 8px;
+    text-align: center;
 }
 
 .loginForm button {

@@ -1,8 +1,19 @@
-import React from 'react';
+import { useEffect, useRef } from "react";
 import classes from "./css/intro.module.css";
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, Navigate, useLoaderData } from 'react-router-dom';
 
 function SignUp() {
+  const userData = useLoaderData();
+  const focusRef = useRef();
+
+  useEffect(() => {
+    focusRef.current.focus();
+  }, [])
+
+  if (userData?.username) {
+    return <Navigate to="/"/>
+  }
+
   return (
     <div className={classes.intro}>
       <img src='/signup-illustration.png' className={classes.signupIllustration} alt="Signup Illustration" />
@@ -18,18 +29,16 @@ function SignUp() {
           <h1 className={`${classes.bold} ${classes.mtb_3}`}>SIGN UP</h1>
 
           <p>Username</p>
-          <input type='text' name='userName' />
+          <input type='text' name='userName' placeholder='john_doe' ref={focusRef} />
 
           <p>Current Balance</p>
-          <span style={{ marginRight: '8px' }}>₹</span>
-          <input type='number' name='currentBalance' />
+          <input type='number' name='currentBalance' placeholder='20,000₹'/>
 
           <p>Monthly Salary</p>
-          <span style={{ marginRight: '8px' }}>₹</span>
-          <input type='number' name='monthlySalary' />
+          <input type='number' name='monthlySalary' placeholder='20,000₹'/>
 
           <p>Password</p>
-          <input type='password' name='password' />
+          <input type='password' name='password' placeholder='A strong password' />
 
 
 
