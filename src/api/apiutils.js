@@ -1,24 +1,126 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 
+const apiURL = 'http://localhost:3000/api/'
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    withCredentials: true,
+    baseURL: apiURL,
     timeout: 1000,
-    headers: {'Content-Type': 'application/json'}
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', 
+    },
   });
   
 function setToken(token){
     instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
-async function login(username, password) {
+export function getLocalCredentials() {
+    const userName = localStorage.getItem("username");
+    const token = sessionStorage.getItem("token");
+    return {userName, token};
+}
+
+async function getAuthToken() {
+    console.log("Refreshed token");
+    try {
+        const response = await axios.post(apiURL+'login/refreshToken',null, {
+            withCredentials: true
+        });
+        if (response.data?.token) {
+            sessionStorage.setItem(
+                "token", response.data.token,
+            )
+            return response.data.token
+        }
+        else {
+            return null;
+        }
+    } catch(error) {
+        console.log(error.message);
+        return null;
+    }
+}
+
+// Refresh the token if it doens't exist in session storage
+instance.interceptors.request.use(config => {
+    let token = sessionStorage.getItem("token") || getAuthToken();
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, error => Promise.reject(error));
+
+
+instance.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
+      try {
+        const token = getAuthToken();
+        // Update the authorization header with the new access token.
+        instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        return instance(originalRequest); // Retry the original request with the new access token.
+      } catch (refreshError) {
+        // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
+        console.error('Token refresh failed:', refreshError);
+        localStorage.removeItem('username');
+        redirect("/login");
+        return Promise.reject(refreshError);
+      }
+    }
+    return Promise.reject(error); // For all other errors, return the error as is.
+  }
+);
+
+export async function login(username, password) {
     try {    
         const response = await instance.post('login', {
             username: username,
             password: password
         });
+
+        localStorage.setItem(
+            "username",
+            username
+        )
+        sessionStorage.setItem(
+            "token", response.data.token,
+        )
+
         return response.data;
     } catch (error) {
         return (error.response.data);
+    }
+}
+
+export async function logout() {
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("username");
+    try {
+        await axios.post(apiURL+"login/logout",null,{ withCredentials: true });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export async function getUser() {
+    try {
+        const response = await instance.get("user");
+
+        if (response.data.username) {
+            return response.data;
+        }
+        else {
+            alert (response.data.message);
+            return null;         
+        }
+    } catch (error) {
+        console.log(error.response.data);
+        return null;
     }
 }
 
