@@ -9,6 +9,10 @@ import Error from './routes/Error';
 import SignUp from './routes/SignUp';
 import Login, { loginAction } from './routes/Login';
 import Logout from './routes/Logout';
+import DashboardHome from './routes/DashboardHome';
+import Investments from './routes/Investments';
+import Expenses from './routes/Expenses';
+
 
 const router = createBrowserRouter([
   {
@@ -17,10 +21,27 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        index: true,
+        path: "/",
         element: <DashboardLoader />,
         loader: dashboardLoader,
         errorElement: <Error />,
+        children: [
+          {
+            index: true,
+            element: <DashboardHome />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/investments",
+            element: <Investments />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/expenses",
+            element: <Expenses />,
+            errorElement: <Error />,
+          },
+        ],
       },
       {
         path: "signup",
@@ -37,7 +58,8 @@ const router = createBrowserRouter([
       },
       {
         path: "logout",
-        element: <Logout />
+        element: <Logout />,
+        loader: dashboardLoader,
       },
     ]
   },

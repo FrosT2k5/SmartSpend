@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
 import { logout } from '../api/apiutils'
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLoaderData, useRevalidator } from 'react-router-dom';
 
 function Logout() {
+  const userData = useLoaderData();
+  const revalidator = useRevalidator();
+
+  useEffect( () => {
     logout();
+    revalidator.revalidate();
+    console.log(userData);
+  }, [revalidator]);
+
   return (
     <Navigate to="/" />
   )

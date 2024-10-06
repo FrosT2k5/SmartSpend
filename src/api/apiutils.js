@@ -45,7 +45,7 @@ async function getAuthToken() {
 
 // Refresh the token if it doens't exist in session storage
 instance.interceptors.request.use(config => {
-    let token = sessionStorage.getItem("token") || getAuthToken();
+    let token = sessionStorage.getItem("token");
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -60,10 +60,10 @@ instance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
       try {
-        const token = getAuthToken();
+        const token = await getAuthToken();
         // Update the authorization header with the new access token.
         instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        return instance(originalRequest); // Retry the original request with the new access token.
+        return await instance(originalRequest); // Retry the original request with the new access token.
       } catch (refreshError) {
         // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
         console.error('Token refresh failed:', refreshError);
@@ -100,6 +100,7 @@ export async function login(username, password) {
 export async function logout() {
     sessionStorage.removeItem("token");
     localStorage.removeItem("username");
+    instance.defaults.headers.common["Authorization"] = null;
     try {
         await axios.post(apiURL+"login/logout",null,{ withCredentials: true });
     } catch (error) {
