@@ -1,0 +1,62 @@
+.mainDashboard {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+    background-color: #F6F8FA;
+    margin: 10px;
+    height: 91vh;
+    border: solid 1px #d9d9d9;
+    border-radius: 20px;
+}
+    
+.dashboardMenu { 
+    grid-area: 1 / 1 / 2 / 2; 
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.dashboardContent { 
+    grid-area: 1 / 2 / 2 / 3; 
+    margin: 15px;
+    background-color: #FFFFFF;
+    border: solid 1px #d9d9d9;
+    border-radius: 20px;
+    padding: 10px;
+}
+    
+
+.navLinkActive {
+    text-decoration: none;
+    color: white;
+    padding: 2px;
+    margin-top: 10px;
+    border-radius: 15px;
+    width: 1fr;
+    background-color: #7543EE;
+    border: solid 1px #d9d9d9;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+    padding: 2px;
+    margin-top: 10px;
+    border-radius: 15px;
+    width: 1fr;
+    background-color: white;
+    border: solid 1px #d9d9d9;
+}
+
+.flexEnd {
+    align-self: center;
+    margin-top: auto;
+    color: red;
+    text-decoration: none;
+}
+
+/* .navLink:active {
+    background-color: #7543EE;
+} */
