@@ -1,13 +1,6 @@
-/* eslint-disable react/prop-types */
 import { useLoaderData } from 'react-router-dom';
 import Intro from './Intro';
-import { getUser } from '../api/apiutils';
 import Dashboard from '../components/Dashboard';
-
-export async function dashboardLoader() {
-  const userData  = await getUser();
-  return userData;
-}
 
 
 function DashboardLoader() {
