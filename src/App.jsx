@@ -31,6 +31,7 @@ const router = createBrowserRouter([
             index: true,
             element: <DashboardHome />,
             errorElement: <Error />,
+            loader: dashboardLoader,
           },
           {
             path: "/investments",

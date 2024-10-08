@@ -4,7 +4,7 @@ import Dashboard from '../components/Dashboard';
 
 
 function DashboardLoader() {
-  const userData = useLoaderData();
+  const { userData } = useLoaderData();
   return (
     <>
         {userData ? <Dashboard userData={userData}/> : <Intro /> }

@@ -46,12 +46,22 @@
     font-weight: bold;
 }
 
-.introBody h1,h2,h3,h4,h5,h6 {
+.introBody h1,
+.introBody h2,
+.introBody h3,
+.introBody h4,
+.introBody h5,
+.introBody h6 {
     font-weight: normal;
     margin: 5px;
     margin-left: 2.5%;
 }
-.loginBody h1,h2,h3,h4,h5,h6 {
+.loginBody h1,
+.loginBody h2,
+.loginBody h3,
+.loginBody h4,
+.loginBody h5,
+.loginBody h6 {
     font-weight: normal;
     margin: 13px;
     margin-left: 2.5%;
