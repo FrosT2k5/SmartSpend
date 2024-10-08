@@ -12,7 +12,7 @@ import Logout from './routes/Logout';
 import DashboardHome from './routes/DashboardHome';
 import Investments from './routes/Investments';
 import Expenses from './routes/Expenses';
-import { loginAction } from './routes/helpers/Actions';
+import { loginAction, signupAction } from './routes/helpers/Actions';
 import { dashboardLoader } from './routes/helpers/Loaders';
 
 const router = createBrowserRouter([
@@ -49,6 +49,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
         errorElement: <Error />,
         loader: dashboardLoader,
+        action: signupAction,
       },
       {
         path: "login",

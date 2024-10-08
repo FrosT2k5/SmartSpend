@@ -76,6 +76,31 @@ instance.interceptors.response.use(
   }
 );
 
+
+export async function signUp(name, username, email, password) {
+    try {    
+        const response = await instance.post('register', {
+            name: name,
+            username: username,
+            email: email,
+            password: password,
+        });
+
+        localStorage.setItem(
+            "username",
+            username
+        )
+        sessionStorage.setItem(
+            "token", response.data.token,
+        )
+
+        return response.data;
+    } catch (error) {
+        return (error.response.data);
+    }
+}
+
+
 export async function login(username, password) {
     try {    
         const response = await instance.post('login', {
