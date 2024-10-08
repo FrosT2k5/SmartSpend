@@ -31,7 +31,7 @@ function Dashboard( {userData} ) {
             }
             key={index}
         >
-            <h3>{ item.name }</h3>
+            <h4>{ item.name }</h4>
         </NavLink>) 
       }
         
