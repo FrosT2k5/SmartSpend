@@ -7,35 +7,34 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 
 function Dashboard( {userData} ) {
 
+    const menuItems = [
+        {
+            name: "Dashboard",
+            path: "/"
+        },
+        {
+            name: "Expenses",
+            path: "/expenses"
+        },
+        {
+            name: "Investments",
+            path: "/investments"
+        },
+    ]
+
     return <div className={classes.mainDashboard}>
       <Menu>
-        <NavLink 
-            to="/" 
+      { menuItems.map((item, index) => <NavLink 
+            to={item.path}
             className={
                 ({ isActive }) => isActive ? classes.navLinkActive : classes.navLink
             }
+            key={index}
         >
-
-            <h3>Dashboard</h3>
-        </NavLink>
-
-        <NavLink 
-            to="/investments" 
-            className={
-                ({ isActive }) => isActive ? classes.navLinkActive : classes.navLink
-            }
-        >
-            <h3>Investments</h3>
-        </NavLink>
-
-        <NavLink 
-            to="/expenses" 
-            className={
-                ({ isActive }) => isActive ? classes.navLinkActive : classes.navLink
-            }
-        >
-            <h3>Expenses</h3>
-        </NavLink>
+            <h4>{ item.name }</h4>
+        </NavLink>) 
+      }
+        
 
         <Link to="/logout" className={classes.flexEnd}>
             Log Out
