@@ -1,11 +1,9 @@
-/* eslint-disable react/prop-types */
-import React from 'react'
 import classes from "../routes/css/dashboard.module.css";
 import Menu from './Menu';
 import Content from './Content';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 
-function Dashboard( {userData} ) {
+function Dashboard() {
 
     const menuItems = [
         {

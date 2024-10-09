@@ -1,11 +1,17 @@
 import React from 'react'
 import classes from '../routes/css/dashboard.module.css';
+import { useLoaderData } from 'react-router-dom';
 
 
 function DashboardHome() {
+
+  const { userData } = useLoaderData();
   return (
     <>
-      <h3 className={classes.headingBox}>Overview</h3>
+      <div className={classes.headingBox}>
+        <h4> Overview </h4>
+        <h4> Welcome, {userData.name}. Financial Freedom begins with Planning. </h4>
+      </div>
       <div className={classes.smallBox}>
         Small Box
       </div>

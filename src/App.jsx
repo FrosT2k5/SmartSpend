@@ -4,15 +4,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Main from './routes/Main';
-import DashboardLoader, { dashboardLoader } from './routes/DashboardLoader';
+import DashboardLoader from './routes/DashboardLoader';
 import Error from './routes/Error';
 import SignUp from './routes/SignUp';
-import Login, { loginAction } from './routes/Login';
+import Login from './routes/Login';
 import Logout from './routes/Logout';
 import DashboardHome from './routes/DashboardHome';
 import Investments from './routes/Investments';
 import Expenses from './routes/Expenses';
-
+import { loginAction, signupAction } from './routes/helpers/Actions';
+import { dashboardLoader } from './routes/helpers/Loaders';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
             index: true,
             element: <DashboardHome />,
             errorElement: <Error />,
+            loader: dashboardLoader,
           },
           {
             path: "/investments",
@@ -48,6 +50,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
         errorElement: <Error />,
         loader: dashboardLoader,
+        action: signupAction,
       },
       {
         path: "login",

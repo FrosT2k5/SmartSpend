@@ -76,6 +76,31 @@ instance.interceptors.response.use(
   }
 );
 
+
+export async function signUp(name, username, email, password) {
+    try {    
+        const response = await instance.post('register', {
+            name: name,
+            username: username,
+            email: email,
+            password: password,
+        });
+
+        localStorage.setItem(
+            "username",
+            username
+        )
+        sessionStorage.setItem(
+            "token", response.data.token,
+        )
+
+        return response.data;
+    } catch (error) {
+        return (error.response.data);
+    }
+}
+
+
 export async function login(username, password) {
     try {    
         const response = await instance.post('login', {
@@ -125,6 +150,53 @@ export async function getUser() {
     }
 }
 
+
+// Function to get all transactions
+export async function getAllTransactions() {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.get(`/${username}/transactions`);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error fetching transactions' };
+    }
+}
+
+// Function to get all investments
+export async function getAllInvestments() {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.get(`/${username}/investments`);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error fetching investments' };
+    }
+}
+
+// Function to get all expenses
+export async function getAllExpenses() {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.get(`/${username}/expenses`);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error fetching expenses' };
+    }
+}
+
+
 // Function to add an expense
 async function addExpense(username, token, expenseData) {
     setToken(token);
@@ -133,17 +205,6 @@ async function addExpense(username, token, expenseData) {
         return response.data;
     } catch (error) {
         return error.response ? error.response.data : { message: 'Error adding expense' };
-    }
-}
-
-// Function to get all expenses
-async function getAllExpenses(username, token) {
-    setToken(token);
-    try {
-        const response = await instance.get(`/${username}/expenses`);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error fetching expenses' };
     }
 }
 
@@ -193,17 +254,6 @@ async function addInvestment(username, token, investmentData) {
     }
 }
 
-// Function to get all investments
-async function getAllInvestments(username, token) {
-    setToken(token);
-    try {
-        const response = await instance.get(`/${username}/investments`);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error fetching investments' };
-    }
-}
-
 // Function to get a specific investment
 async function getInvestment(username, token, investmentId) {
     setToken(token);
@@ -247,17 +297,6 @@ async function addTransaction(username, token, transactionData) {
         return response.data;
     } catch (error) {
         return error.response ? error.response.data : { message: 'Error adding transaction' };
-    }
-}
-
-// Function to get all transactions
-async function getAllTransactions(username, token) {
-    setToken(token);
-    try {
-        const response = await instance.get(`/${username}/transactions`);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error fetching transactions' };
     }
 }
 
