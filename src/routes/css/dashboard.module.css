@@ -114,3 +114,45 @@
 /* .navLink:active {
     background-color: #7543EE;
 } */
+
+
+.dashboardContent > div h3 {
+    font-weight: bolder;
+    font-size: 28px;
+}
+
+.dashboardContent > div button {
+    width: 40%;
+    display: inline-block;
+    margin-left: 13px;
+    margin-right: 13px;
+    background-color: #DEECFF;
+    color: #2673DA;
+    border: none;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.dashboardContent > div button:hover {
+    background-color: #2673DA;
+    color: #DEECFF;
+}
+
+.dashboardContent > div button:active {
+    transform: scale(1.2);
+}
+
+.dashboardContent > table {
+    border-collapse: collapse;
+}
+
+.dashboardContent th,.dashboardContent td {
+    width: 1%;
+    text-align: center;
+}
+
+.textBold {
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 5px;
+}
