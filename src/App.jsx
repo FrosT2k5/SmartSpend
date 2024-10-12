@@ -12,8 +12,9 @@ import Logout from './routes/Logout';
 import DashboardHome from './routes/DashboardHome';
 import Investments from './routes/Investments';
 import Expenses from './routes/Expenses';
-import { loginAction, signupAction } from './routes/helpers/Actions';
+import { accountTransaction, loginAction, signupAction } from './routes/helpers/Actions';
 import { dashboardLoader } from './routes/helpers/Loaders';
+import Balance from './routes/Balance';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,13 @@ const router = createBrowserRouter([
             path: "/investments",
             element: <Investments />,
             errorElement: <Error />,
+          },
+          {
+            path: "/balance",
+            element: <Balance />,
+            errorElement: <Error />,
+            loader: dashboardLoader,
+            action: accountTransaction,
           },
           {
             path: "/expenses",

@@ -197,6 +197,24 @@ export async function getAllExpenses() {
 }
 
 
+// Function to add a transaction
+export async function addTransaction(description, amount) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+    try {
+        const response = await instance.post(`/${username}/transactions`, {
+            description: description,
+            amount: parseInt(amount),
+        });
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error adding transaction' };
+    }
+}
+
+
 // Function to add an expense
 async function addExpense(username, token, expenseData) {
     setToken(token);
@@ -288,17 +306,6 @@ async function deleteInvestment(username, token, investmentId) {
 }
 
 // Transaction Functions
-
-// Function to add a transaction
-async function addTransaction(username, token, transactionData) {
-    setToken(token);
-    try {
-        const response = await instance.post(`/${username}/transactions`, transactionData);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error adding transaction' };
-    }
-}
 
 // Function to get a specific transaction
 async function getTransaction(username, token, index) {

@@ -204,7 +204,20 @@
 }
 
 .textBold {
-    font-weight: bold;
+    font-weight: bold !important;
     margin: 0;
     margin-bottom: 5px;
+}
+
+form p {
+    margin: 3px;
+}
+
+.submitButton {
+    display: block !important;
+    margin-top: 10px;
+}
+
+.displayInline {
+    display: inline;
 }

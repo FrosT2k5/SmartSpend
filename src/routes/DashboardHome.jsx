@@ -16,7 +16,7 @@ function DashboardHome() {
   return (
     <>
       <div className={classes.headingBox}>
-        <h4> Overview </h4>
+        <h4 className={classes.textBold}> Overview </h4>
         <h4> Welcome, {userData.name}. Financial Freedom begins with Planning. </h4>
       </div>
 
