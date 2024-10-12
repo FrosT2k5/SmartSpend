@@ -88,7 +88,23 @@ function DashboardHome() {
                   <td>{ expense.name }</td>
                   <td>{ (expense.currentAmount + expense.usedValue) }</td>
                   <td>{ expense.usedValue }</td>
-                  <td>{ Math.round( (expense.usedValue / (expense.currentAmount + expense.usedValue )) * 100 ) } % </td>
+                  <td>
+                    <progress 
+                      value={ Math.round( 
+                          ( expense.usedValue / 
+                          (expense.currentAmount + expense.usedValue ) ) * 100 
+                        ) }
+                      max="100"> 
+                      { Math.round( 
+                        ( expense.usedValue / 
+                        (expense.currentAmount + expense.usedValue ) ) * 100 
+                      ) } % 
+                    </progress>
+                    { Math.round( 
+                        ( expense.usedValue / 
+                        (expense.currentAmount + expense.usedValue ) ) * 100 
+                      ) } %
+                  </td>
                 </tr>
               })
             }

@@ -11,12 +11,20 @@ function Dashboard() {
             path: "/"
         },
         {
+            name: "Raw Balance",
+            path: "/balance"
+        },
+        {
             name: "Expenses",
             path: "/expenses"
         },
         {
             name: "Investments",
             path: "/investments"
+        },
+        {
+            name: "Loans, EMIs",
+            path: "/loans"
         },
     ]
 

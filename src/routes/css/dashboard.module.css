@@ -151,6 +151,28 @@
     text-align: center;
 }
 
+.dashboardContent progress {
+    border-radius: 10px;
+    height: 15px;
+    margin: auto 10px;
+    background-color: #D9d9d9;
+}
+
+.dashboardContent progress::-webkit-progress-bar {
+    border-radius: 10px;
+    background-color: #D9D9D9;
+}
+
+.dashboardContent progress::-webkit-progress-value {
+    border-radius: 10px;
+    background-color: #7543EE;
+}
+
+.dashboardContent progress::-moz-progress-bar {
+    border-radius: 10px;
+    background-color: #7543EE;
+}
+
 .textBold {
     font-weight: bold;
     margin: 0;
