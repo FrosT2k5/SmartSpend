@@ -1,4 +1,4 @@
-import { login, signUp } from '../../api/apiutils';
+import { addTransaction, login, signUp } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -31,7 +31,6 @@ export async function signupAction({ request }) {
   
     try {
         const resp = await signUp(values.name, values.userName, values.email, values.password);
-        console.log(resp)
         if (!resp?.token) {
             alert("Failure to submit form.");
             return null;
@@ -42,5 +41,23 @@ export async function signupAction({ request }) {
     } catch (e) {
         console.log(e.message);
         throw new Error("There was a problem creating your account.");
+    }
+}
+
+export async function accountTransaction({ request }) {
+    const data = await request.formData();
+    const { ...values } = Object.fromEntries(data);
+
+    let amount = values.amount;
+    const description = values.description;
+    const type = values.type;
+
+    amount = type === "sub" ? -amount : amount;
+    try {
+        const resp = await addTransaction(description, amount);
+        return null;
+    } catch(e) {
+        console.log(e.message);
+        throw new Error("Error adding transaction.")
     }
 }
