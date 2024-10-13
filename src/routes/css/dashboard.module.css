@@ -221,3 +221,8 @@ form p {
 .displayInline {
     display: inline;
 }
+
+.graphDivMedium {
+    height: 250px;
+    margin-top: 20px;
+}

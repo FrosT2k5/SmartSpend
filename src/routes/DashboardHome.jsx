@@ -1,17 +1,63 @@
 import React from 'react'
 import classes from '../routes/css/dashboard.module.css';
 import { useLoaderData } from 'react-router-dom';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function DashboardHome() {
 
-  const { userData, investments, expenses } = useLoaderData();
+  const { userData, investments, expenses, transactions } = useLoaderData();
 
   let totalInvestments = 0;
+  let totalExpenses = 0;
+  let lastTransactions = 0
 
   for (const investment of investments) {
     totalInvestments += investment.currentValue;
   };
+
+  for (const expense of expenses) {
+    totalExpenses += expense.usedValue;
+  };
+
+  let i=0;
+  for (const transaction of transactions) {
+    lastTransactions += transaction.amount;
+    i+=1;
+    if (i>=5)
+      break;
+  }
+
+  let transactionData = {
+    labels: [ "Expenses", "Investments", "Last 5 Transactions" ],
+    datasets: [{
+      label: 'Statistics',
+      data: [totalExpenses, totalInvestments, lastTransactions],
+      borderWidth: 1,
+      backgroundColor: "#2673DA",
+    }]
+  }
+
+  const options = {
+    maintainAspectRatio: false,
+  }
 
   return (
     <>
@@ -20,7 +66,7 @@ function DashboardHome() {
         <h4> Welcome, {userData.name}. Financial Freedom begins with Planning. </h4>
       </div>
 
-      <div className={classes.smallBox}>
+      <div className={classes.smallBoxLong}>
         <p className={classes.textBold}>
           Balance: 
         </p>
@@ -37,6 +83,15 @@ function DashboardHome() {
             <button>
               History
             </button>
+
+            <div className={classes.graphDivMedium}>
+              <Bar 
+                options={options} 
+                data={transactionData}  
+                width={100}
+                height={50} 
+                />
+            </div>
           </div>
       </div>
 
