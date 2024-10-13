@@ -15,6 +15,7 @@ import Expenses from './routes/Expenses';
 import { accountTransaction, loginAction, signupAction } from './routes/helpers/Actions';
 import { dashboardLoader } from './routes/helpers/Loaders';
 import Balance from './routes/Balance';
+import About from './routes/About';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
             element: <DashboardHome />,
             errorElement: <Error />,
             loader: dashboardLoader,
+          },
+          {
+            path: "/about",
+            element: <About />,
+            errorElement: <Error />,
           },
           {
             path: "/investments",
