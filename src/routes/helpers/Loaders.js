@@ -14,3 +14,27 @@ export async function dashboardLoader() {
     console.log(returnData); //TODO: Remove this after debugging done
     return returnData;
 }
+
+export async function expenseLoader() {
+    const userData  = await getUser();
+    let expenses;
+
+    if (userData?.username){    
+        expenses = await getAllExpenses();
+    }
+
+    const returnData = { userData, expenses };
+    return returnData;
+}
+
+export async function investmentLoader() {
+    const userData  = await getUser();
+    let investments;
+
+    if (userData?.username){    
+        investments = await getAllInvestments();
+    }
+
+    const returnData = { userData, investments };
+    return returnData;
+}

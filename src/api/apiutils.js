@@ -214,6 +214,24 @@ export async function addTransaction(description, amount) {
     }
 }
 
+// Function to add an investment
+export async function addInvestment(type, amount, interest) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+    try {
+        const response = await instance.post(`/${username}/investments`, {
+            type: type,
+            baseValue: parseInt(amount),
+            rateOfInterest: parseFloat(interest),
+        });
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error adding investment' };
+    }
+}
+
 
 // Function to add an expense
 async function addExpense(username, token, expenseData) {
@@ -261,16 +279,6 @@ async function deleteExpense(username, token, index) {
 
 // Investment Functions
 
-// Function to add an investment
-async function addInvestment(username, token, investmentData) {
-    setToken(token);
-    try {
-        const response = await instance.post(`/${username}/investments`, investmentData);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error adding investment' };
-    }
-}
 
 // Function to get a specific investment
 async function getInvestment(username, token, investmentId) {

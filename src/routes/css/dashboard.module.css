@@ -226,3 +226,23 @@ form p {
     height: 250px;
     margin-top: 20px;
 }
+
+.graphDivSmall {
+    height: 185px;
+    margin-top: 5px;
+}
+
+.boxFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.boxFlex hr {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.boxFlex div {
+    align-self: center;
+}

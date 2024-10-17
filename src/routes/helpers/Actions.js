@@ -1,4 +1,4 @@
-import { addTransaction, login, signUp } from '../../api/apiutils';
+import { addInvestment, addTransaction, login, signUp } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -59,5 +59,24 @@ export async function accountTransaction({ request }) {
     } catch(e) {
         console.log(e.message);
         throw new Error("Error adding transaction.")
+    }
+}
+
+export async function addNewInvestment({ request }) {
+    const data = await request.formData();
+    const { _action, ...values } = Object.fromEntries(data);
+
+    if (_action === "addInvestment") {
+        const investmentType = values.type;
+        let amount = parseInt(values.amount);
+        const interest = parseFloat(values.interest);
+
+        try {
+            const resp = await addInvestment(investmentType, amount, interest);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error adding transaction.")
+        }
     }
 }
