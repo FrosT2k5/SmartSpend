@@ -59,6 +59,16 @@ function DashboardHome() {
     maintainAspectRatio: false,
   }
 
+  let investmentData = {
+    labels: investments.map((investment) => investment.type),
+    datasets: [{
+      label: "Statistics",
+      data: investments.map((investment) => investment.currentValue),
+      borderWidth: 1,
+      backgroundColor: "#2673DA",
+    }]
+  }
+
   return (
     <>
       <div className={classes.headingBox}>
@@ -97,7 +107,7 @@ function DashboardHome() {
           </div>
       </div>
 
-      <div className={classes.smallBox}>
+      <div className={classes.smallBoxLong}>
       <p className={classes.textBold}>
           Investments: 
         </p>
@@ -114,6 +124,14 @@ function DashboardHome() {
             <button>
               History
             </button>
+            <div className={classes.graphDivMedium}>
+              <Bar 
+                options={options} 
+                data={investmentData}  
+                width={100}
+                height={50} 
+                />
+            </div>
           </div>
       </div>
 
