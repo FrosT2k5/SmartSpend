@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from '../routes/css/dashboard.module.css';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -59,6 +59,16 @@ function DashboardHome() {
     maintainAspectRatio: false,
   }
 
+  let investmentData = {
+    labels: investments.map((investment) => investment.type),
+    datasets: [{
+      label: "Statistics",
+      data: investments.map((investment) => investment.currentValue),
+      borderWidth: 1,
+      backgroundColor: "#2673DA",
+    }]
+  }
+
   return (
     <>
       <div className={classes.headingBox}>
@@ -76,9 +86,11 @@ function DashboardHome() {
           <hr color='#d9d9d9'></hr>
 
           <div style={ {textAlign: "center", "marginTop": "15px"} }>
-            <button>
-              Add Money
-            </button>
+              <Link to="/balance">
+              <button >
+                Add Money
+              </button>
+              </Link>
 
             <button>
               History
@@ -95,7 +107,7 @@ function DashboardHome() {
           </div>
       </div>
 
-      <div className={classes.smallBox}>
+      <div className={classes.smallBoxLong}>
       <p className={classes.textBold}>
           Investments: 
         </p>
@@ -112,6 +124,14 @@ function DashboardHome() {
             <button>
               History
             </button>
+            <div className={classes.graphDivMedium}>
+              <Bar 
+                options={options} 
+                data={investmentData}  
+                width={100}
+                height={50} 
+                />
+            </div>
           </div>
       </div>
 

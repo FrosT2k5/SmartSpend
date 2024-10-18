@@ -209,6 +209,10 @@
     margin-bottom: 5px;
 }
 
+.textRed {
+    color: red;
+}
+
 form p {
     margin: 3px;
 }
@@ -225,4 +229,24 @@ form p {
 .graphDivMedium {
     height: 250px;
     margin-top: 20px;
+}
+
+.graphDivSmall {
+    height: 185px;
+    margin-top: 5px;
+}
+
+.boxFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.boxFlex hr {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.boxFlex div, .boxFlex form {
+    align-self: center;
 }
