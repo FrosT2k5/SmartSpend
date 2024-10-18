@@ -1,4 +1,4 @@
-import { addInvestment, addTransaction, login, signUp } from '../../api/apiutils';
+import { addInvestment, addTransaction, deleteInvestment, login, signUp, updateInvestment } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -77,6 +77,40 @@ export async function addNewInvestment({ request }) {
         } catch(e) {
             console.log(e.message);
             throw new Error("Error adding transaction.")
+        }
+    }
+
+    if (_action === "updateInvestment") {
+        const investmentId = values._investmentId;
+        let amount = parseInt(values.amount);
+        const type = values.type;
+        const description = values.description;
+
+        amount = type === "sub" ? -amount : amount;
+        try {
+            const resp = await updateInvestment(investmentId, description, amount);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error adding transaction in investment.")
+        }
+    }
+
+    if (_action === "deleteInvestment") {
+        const investmentId = values._investmentId;
+        const type = values._investmentType;
+        const userType = values.type;
+
+        if (type !== userType) {
+            return "Invalid Input, investment not deleted"
+        }
+
+        try {
+            const resp = await deleteInvestment(investmentId);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error deleting investment.")
         }
     }
 }

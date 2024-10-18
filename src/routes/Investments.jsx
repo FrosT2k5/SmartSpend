@@ -44,6 +44,8 @@ function Investments() {
     investmentData.labels.push(element.type);
     investmentData.datasets[0].data.push(element.currentValue);
   });
+  investmentTypes = investmentTypes.slice(0, -2)
+
 
 
   return (
@@ -90,11 +92,11 @@ function Investments() {
       </h4>
     </div>
 
-    <div className={classes.smallBox}>
+    <div className={classes.smallBoxLong}>
       <p className={classes.textBold}>
         Investment Graph:
       </p>
-      <div className={classes.graphDivSmall}>
+      <div className={classes.graphDivMedium}>
           <Pie 
             options={options} 
             data={investmentData}  
@@ -120,7 +122,7 @@ function Investments() {
           <input type="hidden" name="_action" value="addInvestment" required={true}/>
 
           <p>Rate of Interest:</p>
-          <input type='number' name='interest' required={true}></input>
+          <input type='decimal' name='interest' required={true}></input>
           <button type='submit' className={classes.submitButton}>
             Submit
           </button>
@@ -128,11 +130,12 @@ function Investments() {
       </p>
     </div>
 
+
     {
       investments.map((investment) => <div className={classes.largeBoxLong} key={investment.investmentId}>
-
         <div className={classes.boxFlex}>
           <div style={{ width: "200px"}}>
+            <h4 className={classes.textBold}>INVESTMENT INFO </h4>
             <h4>
               Investment Type: <span className={classes.textBold}> { investment.type }
               </span>    
@@ -159,21 +162,35 @@ function Investments() {
           </div>
 
           <hr color='#d9d9d9'/>
-          
           <Form method='POST'>
-            <p>Add New Transaction in investement</p>
-            <select name='type'>
-              {INVESTMENT_OPTIONS.map((invOption, index) => <option value={invOption} key={index}>
-                {invOption}
-              </option>)}
-            </select>
+            <p> New Transaction Description</p>
+            <input type='text' name='description'></input>
 
-            <p>Base Value</p>
-            <input type='number' name='amount' required={true}></input>
+            <p>Transaction Amount</p>
+            <input type='number' name='amount'></input>
+
+            <p>Transaction type:</p>
+            <select name="type" id="type" className={classes.displayInline}>
+              <option value="add">Add Money</option>
+              <option value="sub">Subtract Money</option>
+            </select>
             <input type="hidden" name="_action" value="updateInvestment" required={true}/>
-            <input type="hidden" name="_action" value="updateInvestement"  required={true}/>
-            <p>Rate of Interest:</p>
-            <input type='number' name='interest' required={true}></input>
+            <input type="hidden" name="_investmentId" value={investment.investmentId}  required={true}/>
+            <button type='submit' className={classes.submitButton}>
+              Submit
+            </button>
+          </Form>
+
+          <hr color='#d9d9d9'/>
+
+          <Form method='POST'>
+            <h4 className={classes.textBold}> Delete Investment </h4>
+            <p> To Confirm <span className={classes.textRed}>Delete</span>,  </p>
+            <p>Enter investment type: </p>
+            <input type='text' name='type'></input>
+            <input type="hidden" name="_action" value="deleteInvestment" required={true}/>
+            <input type="hidden" name="_investmentId" value={investment.investmentId}  required={true}/>
+            <input type="hidden" name="_investmentType" value={investment.type}  required={true}/>
             <button type='submit' className={classes.submitButton}>
               Submit
             </button>
@@ -182,7 +199,7 @@ function Investments() {
 
 
       <hr color='#d9d9d9'></hr>
-      <h2> Transactions </h2>
+      <h4 className={classes.textBold}> Transactions </h4>
       <div style={ {overflow: "scroll", padding: "10px", height: "135px"} }>
           <table >
             <tr>

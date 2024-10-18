@@ -232,6 +232,38 @@ export async function addInvestment(type, amount, interest) {
     }
 }
 
+// Function to update an investment
+export async function updateInvestment(investmentId, description, amount) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+    try {
+        const response = await instance.put(`/${username}/investments/${investmentId}`, {
+            "transactionAmount": parseInt(amount),
+            "description": description,
+        });
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error updating investment' };
+    }
+}
+
+// Function to delete an investment
+export async function deleteInvestment(investmentId) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.delete(`/${username}/investments/${investmentId}`);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error deleting investment' };
+    }
+}
+
 
 // Function to add an expense
 async function addExpense(username, token, expenseData) {
@@ -291,27 +323,7 @@ async function getInvestment(username, token, investmentId) {
     }
 }
 
-// Function to update an investment
-async function updateInvestment(username, token, investmentId, updatedData) {
-    setToken(token);
-    try {
-        const response = await instance.put(`/${username}/investments/${investmentId}`, updatedData);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error updating investment' };
-    }
-}
 
-// Function to delete an investment
-async function deleteInvestment(username, token, investmentId) {
-    setToken(token);
-    try {
-        const response = await instance.delete(`/${username}/investments/${investmentId}`);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error deleting investment' };
-    }
-}
 
 // Transaction Functions
 

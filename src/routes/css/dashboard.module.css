@@ -209,6 +209,10 @@
     margin-bottom: 5px;
 }
 
+.textRed {
+    color: red;
+}
+
 form p {
     margin: 3px;
 }
@@ -239,10 +243,10 @@ form p {
 }
 
 .boxFlex hr {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
-.boxFlex div {
+.boxFlex div, .boxFlex form {
     align-self: center;
 }
