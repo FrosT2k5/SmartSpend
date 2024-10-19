@@ -153,6 +153,11 @@ function Expenses() {
               { expense.usedValue }
               </span>    
             </h4>
+            <h4>
+              Payment Method: <span className={classes.textBold}>
+              { expense.modeOfPayment }
+              </span>    
+            </h4>
 
             <progress 
                 value={ Math.round( 
