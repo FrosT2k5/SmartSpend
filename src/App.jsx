@@ -12,7 +12,7 @@ import Logout from './routes/Logout';
 import DashboardHome from './routes/DashboardHome';
 import Investments from './routes/Investments';
 import Expenses from './routes/Expenses';
-import { accountTransaction, addNewInvestment, loginAction, signupAction } from './routes/helpers/Actions';
+import { accountTransaction, addNewInvestment, loginAction, signupAction, updateExpenses } from './routes/helpers/Actions';
 import { dashboardLoader, expenseLoader, investmentLoader } from './routes/helpers/Loaders';
 import Balance from './routes/Balance';
 import About from './routes/About';
@@ -59,6 +59,7 @@ const router = createBrowserRouter([
             element: <Expenses />,
             errorElement: <Error />,
             loader: expenseLoader,
+            action: updateExpenses,
           },
         ],
       },

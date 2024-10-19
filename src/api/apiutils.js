@@ -265,14 +265,56 @@ export async function deleteInvestment(investmentId) {
 }
 
 
-// Function to add an expense
-async function addExpense(username, token, expenseData) {
-    setToken(token);
+export async function addExpense(name, amount, modeOfPayment) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
     try {
-        const response = await instance.post(`/${username}/expenses`, expenseData);
+        const response = await instance.post(`/${username}/expenses`, { 
+            name, 
+            currentAmount: parseInt(amount),
+            modeOfPayment,
+            usedValue: 0,
+        });
         return response.data;
     } catch (error) {
         return error.response ? error.response.data : { message: 'Error adding expense' };
+    }
+}
+
+
+// Function to update an expense
+export async function updateExpense(expenseId, amount, description) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.put(`/${username}/expenses/${expenseId}`, {
+            amount,
+            description
+        });
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error updating expense' };
+    }
+}
+
+// Function to delete an expense
+export async function deleteExpense(expenseId) {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        throw new Error("Username Not Found. Login Again")
+    }
+
+    try {
+        const response = await instance.delete(`/${username}/expenses/${expenseId}`);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error deleting expense' };
     }
 }
 
@@ -287,27 +329,7 @@ async function getExpense(username, token, index) {
     }
 }
 
-// Function to update an expense
-async function updateExpense(username, token, index, updatedData) {
-    setToken(token);
-    try {
-        const response = await instance.put(`/${username}/expenses/${index}`, updatedData);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error updating expense' };
-    }
-}
 
-// Function to delete an expense
-async function deleteExpense(username, token, index) {
-    setToken(token);
-    try {
-        const response = await instance.delete(`/${username}/expenses/${index}`);
-        return response.data;
-    } catch (error) {
-        return error.response ? error.response.data : { message: 'Error deleting expense' };
-    }
-}
 
 // Investment Functions
 
