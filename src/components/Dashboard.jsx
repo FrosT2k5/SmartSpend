@@ -1,7 +1,7 @@
 import classes from "../routes/css/dashboard.module.css";
 import Menu from './Menu';
 import Content from './Content';
-import { Link, NavLink, Outlet, useLoaderData } from 'react-router-dom';
+import { Form, Link, NavLink, Outlet, useLoaderData } from 'react-router-dom';
 
 function Dashboard() {
     const { userData } = useLoaderData();
@@ -58,9 +58,12 @@ function Dashboard() {
       }
         
 
-        <Link to="/logout" className={classes.flexEnd}>
+        <Form method="POST" className={classes.flexEnd} >
+          <input type="hidden" name="_action" value="logout" required={true}/>
+          <button>
             Log Out
-        </Link>
+          </button>
+        </Form>
       </Menu>
 
       <Content>

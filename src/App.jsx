@@ -8,15 +8,16 @@ import DashboardLoader from './routes/DashboardLoader';
 import Error from './routes/Error';
 import SignUp from './routes/SignUp';
 import Login from './routes/Login';
-import Logout from './routes/Logout';
 import DashboardHome from './routes/DashboardHome';
 import Investments from './routes/Investments';
 import Expenses from './routes/Expenses';
-import { accountTransaction, addNewInvestment, loginAction, signupAction, updateAccount, updateExpenses } from './routes/helpers/Actions';
+import { accountTransaction, addNewInvestment, dashboardAction, loginAction, signupAction, updateAccount, updateExpenses } from './routes/helpers/Actions';
 import { dashboardLoader, expenseLoader, investmentLoader, userData } from './routes/helpers/Loaders';
 import Balance from './routes/Balance';
 import About from './routes/About';
 import Settings from './routes/Settings';
+import { Bounce, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
         element: <DashboardLoader />,
         loader: dashboardLoader,
         errorElement: <Error />,
+        action: dashboardAction,
         children: [
           {
             index: true,
@@ -85,11 +87,6 @@ const router = createBrowserRouter([
         action: loginAction,
         loader: dashboardLoader,
       },
-      {
-        path: "logout",
-        element: <Logout />,
-        loader: dashboardLoader,
-      },
     ]
   },
 ]);
@@ -98,6 +95,19 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+        />
       <RouterProvider router={router}/ >
     </>
   )

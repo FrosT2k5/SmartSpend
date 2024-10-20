@@ -1,5 +1,6 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const apiURL = 'http://localhost:3000/api/'
 const instance = axios.create({
