@@ -102,8 +102,16 @@
 .flexEnd {
     align-self: center;
     margin-top: auto;
-    color: red;
-    text-decoration: none;
+}
+
+.flexEnd button {
+	background: none;
+	color: red;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .navLink, .navLinkActive {

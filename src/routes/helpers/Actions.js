@@ -1,4 +1,5 @@
-import { addExpense, addInvestment, addTransaction, deleteExpense, deleteInvestment, login, signUp, updateExpense, updateInvestment, updateUserData } from '../../api/apiutils';
+import { toast } from 'react-toastify';
+import { addExpense, addInvestment, addTransaction, deleteExpense, deleteInvestment, login, logout, signUp, updateExpense, updateInvestment, updateUserData } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -11,14 +12,16 @@ export async function loginAction({ request }) {
         try {
             const resp = await login(values.userName, values.password);
             if (!resp?.token) {
-                alert("Invalid credentials.");
+                toast.error("Invalid credentials.");
                 return null;
             }
             else {
+                toast.success("Login Successful");
                 return redirect("/");
             }
         } catch (e) {
             console.log(e.message);
+            toast.error("Login Failed");
             throw new Error("There was a problem creating your account.");
         }
     }
@@ -32,14 +35,15 @@ export async function signupAction({ request }) {
     try {
         const resp = await signUp(values.name, values.userName, values.email, values.password);
         if (!resp?.token) {
-            alert("Failure to submit form.");
-            return null;
+            return toast.error("Failed to submit form");
         }
         else {
+            toast.info("User Successfully Created, redirected to dashboard.")
             return redirect("/");
         }
     } catch (e) {
         console.log(e.message);
+        toast.error("Failed to SignUp.")
         throw new Error("There was a problem creating your account.");
     }
 }
@@ -55,9 +59,16 @@ export async function accountTransaction({ request }) {
     amount = type === "sub" ? -amount : amount;
     try {
         const resp = await addTransaction(description, amount);
+        if ("error" in resp) {
+            toast.error("Error occured: "+resp.error);
+        }
+        else {
+            toast.info("Added transaction of ₹ "+amount)
+        }
         return null;
     } catch(e) {
         console.log(e.message);
+        toast.error("Failed to Add Transaction")
         throw new Error("Error adding transaction.")
     }
 }
@@ -73,9 +84,16 @@ export async function addNewInvestment({ request }) {
 
         try {
             const resp = await addInvestment(investmentType, amount, interest);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Added New Investement: "+investmentType)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
+            toast.error("Failed to Add Investment.")
             throw new Error("Error adding transaction.")
         }
     }
@@ -89,9 +107,16 @@ export async function addNewInvestment({ request }) {
         amount = type === "sub" ? -amount : amount;
         try {
             const resp = await updateInvestment(investmentId, description, amount);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Added transaction of ₹ "+amount)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
+            toast.error("Error adding transaction in investment.")
             throw new Error("Error adding transaction in investment.")
         }
     }
@@ -107,9 +132,16 @@ export async function addNewInvestment({ request }) {
 
         try {
             const resp = await deleteInvestment(investmentId);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Removed Investment: "+type)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
+            toast.error("Failed to delete investment.")
             throw new Error("Error deleting investment.")
         }
     }
@@ -126,9 +158,16 @@ export async function updateExpenses({ request }) {
 
         try {
             const resp = await addExpense(name, amount, mode);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Added New expense: "+name)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
+            toast.error("Failed to add expense.")
             throw new Error("Error adding transaction.")
         }
     }
@@ -142,9 +181,16 @@ export async function updateExpenses({ request }) {
         amount = type === "sub" ? -amount : amount;
         try {
             const resp = await updateExpense(expenseId, amount, description);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Added transaction of ₹ "+amount)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
+            toast.error("Failed to add transaction to expense.")
             throw new Error("Error adding transaction in investment.")
         }
     }
@@ -160,6 +206,12 @@ export async function updateExpenses({ request }) {
 
         try {
             const resp = await deleteExpense(expenseId);
+            if ("error" in resp) {
+                toast.error("Error occured: "+resp.error);
+            }
+            else {
+                toast.info("Deleted Expense: "+name)
+            }
             return null;
         } catch(e) {
             console.log(e.message);
@@ -196,9 +248,26 @@ export async function updateAccount({ request }) {
     console.log(returnData);
     try {
         const resp = await updateUserData(returnData);
+        if ("error" in resp) {
+            toast.error("Error occured: "+resp.error);
+        }
+        else {
+            toast.info("Updated Account Information Successfully")
+        }
         return null;
     } catch(e) {
         console.log(e.message);
+        toast.error("Failed to Update Account Info.")
         throw new Error("Error adding transaction.")
+    }
+}
+
+export async function dashboardAction({ request }) {
+    const data = await request.formData();
+    const { _action, ...values } = Object.fromEntries(data);  
+    
+    if (_action === "logout") {
+        logout();
+        return toast.success("Logout Successful!");
     }
 }

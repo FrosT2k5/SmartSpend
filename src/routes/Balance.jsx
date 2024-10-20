@@ -4,6 +4,16 @@ import { Form, useLoaderData } from 'react-router-dom';
 
 function Balance() {
   const { userData, transactions } = useLoaderData()
+  let amountSpentThisMonth = 0;
+  const currentMonth = new Date().getMonth();
+
+  transactions.forEach((transaction) => {
+    if (new Date(transaction.date).getMonth() === currentMonth && transaction.amount < 0)
+      amountSpentThisMonth += transaction.amount;
+  });
+
+  amountSpentThisMonth = -amountSpentThisMonth;
+
   return (
     <>
       <div className={classes.headingBox}>
@@ -28,17 +38,12 @@ function Balance() {
         </h4>
         <h4>
           Amount spent this month: <span className={classes.textBold}>
-          ₹ calc
+          ₹ { Number((amountSpentThisMonth).toFixed(1)).toLocaleString() }
           </span>    
         </h4>
         <h4>
           Remaining from this month: <span className={classes.textBold}>
-          ₹ calc
-          </span>
-        </h4>
-        <h4>
-          Days remaining till next income: <span className={classes.textBold}>
-          ₹ calc
+          ₹ { Number((userData.monthlyIncome - amountSpentThisMonth).toFixed(1)).toLocaleString() }
           </span>
         </h4>
       </div>
@@ -76,7 +81,7 @@ function Balance() {
               <th>Date</th>
             </tr>
             {
-              transactions.map( (transaction, index) => {
+              transactions.toReversed().map( (transaction, index) => {
                 return <tr key={index}>
                   <td>{ transaction.description }</td>
                   <td style={ {color: transaction.amount > 0 ? "green" : "red"} }

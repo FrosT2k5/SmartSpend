@@ -14,9 +14,12 @@ ChartJS.register(
 function Investments() {
   const { userData, investments } = useLoaderData();
   const INVESTMENT_OPTIONS = ['RD', 'FD', 'MF', 'Gold', 'Real Estate']
+  const currentMonth = new Date().getMonth();
 
   let totalInvestments = 0;
   let investmentTypes = "";
+  let thisMonthInvestment = 0;
+
   let investmentData = {
     labels: [],
     datasets: [{
@@ -43,7 +46,12 @@ function Investments() {
     investmentTypes += element.type + ", "
     investmentData.labels.push(element.type);
     investmentData.datasets[0].data.push(element.currentValue);
+    element.transactions.forEach(transaction => {
+      if (new Date(transaction.date).getMonth() === currentMonth)
+        thisMonthInvestment += transaction.amount;
+    })
   });
+  
   investmentTypes = investmentTypes.slice(0, -2)
 
 
@@ -82,12 +90,12 @@ function Investments() {
       </h4>
       <h4>
         Amount invested this month: <span className={classes.textBold}>
-        ₹ calc
+        ₹ { Number((thisMonthInvestment).toFixed(1)).toLocaleString() }
         </span>
       </h4>
       <h4>
         Income to investement ratio: <span className={classes.textBold}>
-        ₹ calc
+        { Math.round((thisMonthInvestment/userData.monthlyIncome)*100) } %
         </span>
       </h4>
     </div>
@@ -208,7 +216,7 @@ function Investments() {
               <th>Date</th>
             </tr>
             {
-              investment.transactions.map( (transaction, index) => {
+              investment.transactions.toReversed().map( (transaction, index) => {
                 return <tr key={index}>
                   <td>{ transaction.description }</td>
                   <td style={ {color: transaction.amount > 0 ? "green" : "red"} }
