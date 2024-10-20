@@ -46,10 +46,10 @@ function DashboardHome() {
   }
 
   let transactionData = {
-    labels: [ "Expenses", "Investments", "Last 5 Transactions" ],
+    labels: [ "Monthly Income", "Expenses", "Investments", "Last 5 Transactions" ],
     datasets: [{
       label: 'Statistics',
-      data: [totalExpenses, totalInvestments, lastTransactions],
+      data: [userData.monthlyIncome, totalExpenses, totalInvestments, lastTransactions],
       borderWidth: 1,
       backgroundColor: "#2673DA",
     }]

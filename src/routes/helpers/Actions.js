@@ -1,4 +1,4 @@
-import { addExpense, addInvestment, addTransaction, deleteExpense, deleteInvestment, login, signUp, updateExpense, updateInvestment } from '../../api/apiutils';
+import { addExpense, addInvestment, addTransaction, deleteExpense, deleteInvestment, login, signUp, updateExpense, updateInvestment, updateUserData } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -165,5 +165,40 @@ export async function updateExpenses({ request }) {
             console.log(e.message);
             throw new Error("Error deleting investment.")
         }
+    }
+}
+
+export async function updateAccount({ request }) {
+    const data = await request.formData();
+    const { ...values } = Object.fromEntries(data);
+    let returnData = {};
+
+    const name = values?.name;
+    const income = values?.income;
+    const password = values?.password;
+    const confirmPassword = values?.confirmPassword;
+
+    if (name) {
+        returnData["name"] = name;
+    }
+
+    if (password) {
+        if (password !== confirmPassword) {
+            return "Passwords do not match"
+        }
+        returnData["password"] = password;
+    }
+
+    if (income) {
+        returnData["monthlyIncome"] = income;
+    }
+
+    console.log(returnData);
+    try {
+        const resp = await updateUserData(returnData);
+        return null;
+    } catch(e) {
+        console.log(e.message);
+        throw new Error("Error adding transaction.")
     }
 }

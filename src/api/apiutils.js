@@ -318,6 +318,17 @@ export async function deleteExpense(expenseId) {
     }
 }
 
+// Function to update userData
+export async function updateUserData(data) {
+
+    try {
+        const response = await instance.put("/user", data);
+        return response.data;
+    } catch (error) {
+        return error.response ? error.response.data : { message: 'Error deleting expense' };
+    }
+}
+
 // Function to get a specific expense
 async function getExpense(username, token, index) {
     setToken(token);

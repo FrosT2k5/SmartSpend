@@ -24,9 +24,13 @@ function Dashboard() {
             path: "/investments"
         },
         {
-            name: "Loans, EMIs",
-            path: "/loans"
-        },
+          name: "Settings",
+          path: "/settings"
+      },
+        // {
+        //     name: "Loans, EMIs",
+        //     path: "/loans"
+        // },
     ]
 
     return <div className={classes.mainDashboard}>

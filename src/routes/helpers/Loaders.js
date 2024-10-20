@@ -38,3 +38,10 @@ export async function investmentLoader() {
     const returnData = { userData, investments };
     return returnData;
 }
+
+export async function userData() {
+    const userData  = await getUser();
+
+    const returnData = { userData };
+    return returnData;
+}
