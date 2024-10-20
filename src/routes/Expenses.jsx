@@ -84,13 +84,8 @@ function Expenses() {
           </span>    
         </h4>
         <h4>
-          Total amount spent: <span className={classes.textBold}>
-          ₹ calc
-          </span>
-        </h4>
-        <h4>
           Income to expense ratio: <span className={classes.textBold}>
-          ₹ calc
+          { Math.round((totalUsedAmount/userData.monthlyIncome)*100) } %
           </span>
         </h4>
       </div>
