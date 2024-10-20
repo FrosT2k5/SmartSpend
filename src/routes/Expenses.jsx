@@ -225,7 +225,7 @@ function Expenses() {
                 <th>Date</th>
               </tr>
               {
-                expense.transactions.map( (transaction, index) => {
+                expense.transactions.toReversed().map( (transaction, index) => {
                   return <tr key={index}>
                     <td>{ transaction.description }</td>
                     <td style={ {color: transaction.amount > 0 ? "green" : "red"} }
