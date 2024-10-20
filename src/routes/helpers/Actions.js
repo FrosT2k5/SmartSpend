@@ -1,4 +1,4 @@
-import { addInvestment, addTransaction, deleteInvestment, login, signUp, updateInvestment } from '../../api/apiutils';
+import { addExpense, addInvestment, addTransaction, deleteExpense, deleteInvestment, login, signUp, updateExpense, updateInvestment, updateUserData } from '../../api/apiutils';
 import { redirect } from 'react-router-dom';
 
 export async function loginAction({ request }) {
@@ -112,5 +112,93 @@ export async function addNewInvestment({ request }) {
             console.log(e.message);
             throw new Error("Error deleting investment.")
         }
+    }
+}
+
+export async function updateExpenses({ request }) {
+    const data = await request.formData();
+    const { _action, ...values } = Object.fromEntries(data);
+
+    if (_action === "addExpense") {
+        const name = values.name;
+        let amount = parseInt(values.amount);
+        const mode = values.mode;
+
+        try {
+            const resp = await addExpense(name, amount, mode);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error adding transaction.")
+        }
+    }
+
+    if (_action === "updateExpense") {
+        const expenseId = values._expenseId;
+        let amount = parseInt(values.amount);
+        const type = values.type;
+        const description = values.description;
+
+        amount = type === "sub" ? -amount : amount;
+        try {
+            const resp = await updateExpense(expenseId, amount, description);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error adding transaction in investment.")
+        }
+    }
+
+    if (_action === "deleteExpense") {
+        const expenseId = values._expenseId;
+        const name = values._expenseName;
+        const userEnteredName = values.name;
+
+        if (name !== userEnteredName) {
+            return "Invalid Input, investment not deleted"
+        }
+
+        try {
+            const resp = await deleteExpense(expenseId);
+            return null;
+        } catch(e) {
+            console.log(e.message);
+            throw new Error("Error deleting investment.")
+        }
+    }
+}
+
+export async function updateAccount({ request }) {
+    const data = await request.formData();
+    const { ...values } = Object.fromEntries(data);
+    let returnData = {};
+
+    const name = values?.name;
+    const income = values?.income;
+    const password = values?.password;
+    const confirmPassword = values?.confirmPassword;
+
+    if (name) {
+        returnData["name"] = name;
+    }
+
+    if (password) {
+        if (password !== confirmPassword) {
+            return "Passwords do not match"
+        }
+        returnData["password"] = password;
+    }
+
+    if (income) {
+        returnData["monthlyIncome"] = income;
+    }
+
+    console.log(returnData);
+    try {
+        const resp = await updateUserData(returnData);
+        return null;
+    } catch(e) {
+        console.log(e.message);
+        throw new Error("Error adding transaction.")
     }
 }

@@ -12,6 +12,7 @@ ChartJS.register(
 function Expenses() {
   const { userData, expenses } = useLoaderData();
 
+  const PAYMENT_METHODS = ['Cash', 'Credit Card', 'Debit Card', 'Net Banking', 'UPI', 'Others']
   let totalExpenses = 0;
   let totalUsedAmount = 0;
   let expensesTypes = "";
@@ -94,11 +95,11 @@ function Expenses() {
         </h4>
       </div>
 
-      <div className={classes.smallBox}>
+      <div className={classes.smallBoxLong}>
         <p className={classes.textBold}>
           Investment Graph:
         </p>
-        <div className={classes.graphDivSmall}>
+        <div className={classes.graphDivMedium}>
           <Doughnut 
             options={options} 
             data={expensesData}  
@@ -108,8 +109,33 @@ function Expenses() {
         </div>
       </div>
 
+      <div className={classes.smallBox}>
+        <p className={classes.textBold}>
+          Add New Expense:
+          <Form method='POST'>
 
-      {expenses.map((expense) => <div className={classes.largeBoxLong} key={expense.investmentId}>
+            <p>Name</p>
+            <input type='text' name='name' required={true}></input>
+            <input type="hidden" name="_action" value="addExpense" required={true}/>
+
+            <p>Amount:</p>
+            <input type='number' name='amount' required={true}></input>
+
+            <p>Mode of Payment</p>
+            <select name='mode'>
+              {PAYMENT_METHODS.map((invOption, index) => <option value={invOption} key={index}>
+                {invOption}
+              </option>)}
+            </select>
+
+            <button type='submit' className={classes.submitButton}>
+              Submit
+            </button>
+          </Form>
+        </p>
+      </div>
+
+      {expenses.map((expense, index) => <div className={classes.largeBoxLong} key={index}>
         <div className={classes.boxFlex}>
           <div style={{ width: "200px"}}>
             <h4 className={classes.textBold}>EXPENSE INFO </h4>
@@ -124,7 +150,12 @@ function Expenses() {
             </h4>
             <h4>
               Used Value: <span className={classes.textBold}>
-              { expense.currentAmount }
+              { expense.usedValue }
+              </span>    
+            </h4>
+            <h4>
+              Payment Method: <span className={classes.textBold}>
+              { expense.modeOfPayment }
               </span>    
             </h4>
 
@@ -156,11 +187,12 @@ function Expenses() {
 
             <p>Transaction type:</p>
             <select name="type" id="type" className={classes.displayInline}>
-              <option value="add">Add Money</option>
-              <option value="sub">Subtract Money</option>
+              <option value="add">Add spent money</option>
+              <option value="sub">Remove spent money</option>
+
             </select>
-            <input type="hidden" name="_action" value="updateInvestment" required={true}/>
-            <input type="hidden" name="_investmentId" value={expense.investmentId}  required={true}/>
+            <input type="hidden" name="_action" value="updateExpense" required={true}/>
+            <input type="hidden" name="_expenseId" value={index+1}  required={true}/>
             <button type='submit' className={classes.submitButton}>
               Submit
             </button>
@@ -169,13 +201,13 @@ function Expenses() {
           <hr color='#d9d9d9'/>
 
           <Form method='POST'>
-            <h4 className={classes.textBold}> Delete Investment </h4>
+            <h4 className={classes.textBold}> Delete Expense </h4>
             <p> To Confirm <span className={classes.textRed}>Delete</span>,  </p>
-            <p>Enter investment type: </p>
-            <input type='text' name='type'></input>
-            <input type="hidden" name="_action" value="deleteInvestment" required={true}/>
-            <input type="hidden" name="_investmentId" value={expense.investmentId}  required={true}/>
-            <input type="hidden" name="_investmentType" value={expense.type}  required={true}/>
+            <p>Enter expense name: </p>
+            <input type='text' name='name'></input>
+            <input type="hidden" name="_action" value="deleteExpense" required={true}/>
+            <input type="hidden" name="_expenseId" value={index+1}  required={true}/>
+            <input type="hidden" name="_expenseName" value={expense.name}  required={true}/>
             <button type='submit' className={classes.submitButton}>
               Submit
             </button>
