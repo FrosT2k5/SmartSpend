@@ -258,3 +258,8 @@ form p {
 .boxFlex div, .boxFlex form {
     align-self: center;
 }
+
+.selfCenter {
+    align-self: center;
+    text-align: center;
+}
