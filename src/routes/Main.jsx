@@ -7,7 +7,7 @@ function Main() {
     <div className={classes.main}>
       <nav className={classes.navbar}>
         <div className={classes.navbarBrand}>
-          <img src="public/logo.png" alt="Logo" className={classes.logo} />
+          <img src="/logo.png" alt="Logo" className={classes.logo} />
           <span className={classes.brandName}> SmartSpend</span>
         </div>
         <div className={classes.navbarLinks}>
