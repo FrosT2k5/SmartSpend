@@ -1,8 +1,9 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
-import { toast } from "react-toastify";
 
+// const apiURL = '/api/'
 const apiURL = 'http://localhost:3000/api/'
+
 const instance = axios.create({
     withCredentials: true,
     baseURL: apiURL,
@@ -15,6 +16,16 @@ const instance = axios.create({
   
 function setToken(token){
     instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
+async function getCurrentUser() {
+    const currentUsername = localStorage.getItem("username");
+    if (!currentUsername) {
+        await logout();
+        throw new Error("Username Not Found. Login Again");
+    }
+    return currentUsername;
+    
 }
 
 export function getLocalCredentials() {
@@ -142,7 +153,6 @@ export async function getUser() {
             return response.data;
         }
         else {
-            alert (response.data.message);
             return null;         
         }
     } catch (error) {
@@ -154,10 +164,7 @@ export async function getUser() {
 
 // Function to get all transactions
 export async function getAllTransactions() {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.get(`/${username}/transactions`);
@@ -169,10 +176,7 @@ export async function getAllTransactions() {
 
 // Function to get all investments
 export async function getAllInvestments() {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.get(`/${username}/investments`);
@@ -184,10 +188,7 @@ export async function getAllInvestments() {
 
 // Function to get all expenses
 export async function getAllExpenses() {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.get(`/${username}/expenses`);
@@ -200,10 +201,7 @@ export async function getAllExpenses() {
 
 // Function to add a transaction
 export async function addTransaction(description, amount) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
     try {
         const response = await instance.post(`/${username}/transactions`, {
             description: description,
@@ -217,10 +215,7 @@ export async function addTransaction(description, amount) {
 
 // Function to add an investment
 export async function addInvestment(type, amount, interest) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
     try {
         const response = await instance.post(`/${username}/investments`, {
             type: type,
@@ -235,10 +230,7 @@ export async function addInvestment(type, amount, interest) {
 
 // Function to update an investment
 export async function updateInvestment(investmentId, description, amount) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
     try {
         const response = await instance.put(`/${username}/investments/${investmentId}`, {
             "transactionAmount": parseInt(amount),
@@ -252,10 +244,7 @@ export async function updateInvestment(investmentId, description, amount) {
 
 // Function to delete an investment
 export async function deleteInvestment(investmentId) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.delete(`/${username}/investments/${investmentId}`);
@@ -267,10 +256,7 @@ export async function deleteInvestment(investmentId) {
 
 
 export async function addExpense(name, amount, modeOfPayment) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.post(`/${username}/expenses`, { 
@@ -288,10 +274,7 @@ export async function addExpense(name, amount, modeOfPayment) {
 
 // Function to update an expense
 export async function updateExpense(expenseId, amount, description) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.put(`/${username}/expenses/${expenseId}`, {
@@ -306,10 +289,7 @@ export async function updateExpense(expenseId, amount, description) {
 
 // Function to delete an expense
 export async function deleteExpense(expenseId) {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        throw new Error("Username Not Found. Login Again")
-    }
+    const username = await getCurrentUser();
 
     try {
         const response = await instance.delete(`/${username}/expenses/${expenseId}`);
