@@ -7,7 +7,7 @@ const apiURL = 'http://localhost:3000/api/'
 const instance = axios.create({
     withCredentials: true,
     baseURL: apiURL,
-    timeout: 1000,
+    timeout: 8000,
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*', 
