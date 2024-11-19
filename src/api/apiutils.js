@@ -1,6 +1,7 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
 
+// const apiURL = 'https://smartspend-h6cxb0dng5ardeef.centralindia-01.azurewebsites.net/api/'
 // const apiURL = '/api/'
 const apiURL = 'http://localhost:3000/api/'
 
