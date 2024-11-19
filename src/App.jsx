@@ -89,7 +89,9 @@ const router = createBrowserRouter([
       },
     ]
   },
-]);
+],
+// {basename: "/SmartSpend"},
+);
 
 
 function App() {
