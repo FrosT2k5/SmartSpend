@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import classes from "./css/intro.module.css";
 import { Form, Link, Navigate, useLoaderData } from 'react-router-dom';
+import loginBackgroundUrl from '/loginbackground.svg';
+import signupIllustrationUrl from '/signup-illustration.png';
 
 function SignUp() {
   const userData = useLoaderData();
@@ -16,8 +18,8 @@ function SignUp() {
 
   return (
     <div className={classes.intro}>
-      <img src='/signup-illustration.png' className={classes.signupIllustration} alt="Signup Illustration" />
-      <img src='/loginbackground.svg' className={classes.loginBackground}></img>
+      <img src={signupIllustrationUrl} className={classes.signupIllustration} alt="Signup Illustration" />
+      <img src={loginBackgroundUrl} className={classes.loginBackground}></img>
       <div className={classes.loginBody}>
         <Form className={classes.loginForm} method="POST">
           <h1 

@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 import classes from "./css/main.module.css";
+import logoUrl from "/logo.png";
 
 function Main() {
 
@@ -7,7 +8,7 @@ function Main() {
     <div className={classes.main}>
       <nav className={classes.navbar}>
         <div className={classes.navbarBrand}>
-          <img src="/logo.png" alt="Logo" className={classes.logo} />
+          <img src={logoUrl} alt="Logo" className={classes.logo} />
           <span className={classes.brandName}> SmartSpend</span>
         </div>
         <div className={classes.navbarLinks}>

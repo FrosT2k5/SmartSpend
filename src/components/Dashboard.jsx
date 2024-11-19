@@ -2,6 +2,7 @@ import classes from "../routes/css/dashboard.module.css";
 import Menu from './Menu';
 import Content from './Content';
 import { Form, Link, NavLink, Outlet, useLoaderData } from 'react-router-dom';
+import profileUrl from "/profile.svg";
 
 function Dashboard() {
     const { userData } = useLoaderData();
@@ -38,7 +39,7 @@ function Dashboard() {
 
       <div className={classes.profile}>
         <div className={classes.profileBox}>
-          <img src="/profile.svg"></img>
+          <img src={profileUrl}></img>
           <p>
             {userData.name}
           </p>
