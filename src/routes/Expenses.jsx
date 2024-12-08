@@ -92,7 +92,7 @@ function Expenses() {
 
       <div className={classes.smallBoxLong}>
         <p className={classes.textBold}>
-          Investment Graph:
+          Expenses Graph:
         </p>
         <div className={classes.graphDivMedium}>
           <Doughnut 
