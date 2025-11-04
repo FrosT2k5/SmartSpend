@@ -57,7 +57,7 @@ npm run dev
 ```
 cd SmartSpend_Backend
 npm start 
-# OR, for development live backend backend changes
+# OR, for development live backend changes sync with server
 # npm run nodemon
 ```
 5. Production deployment
