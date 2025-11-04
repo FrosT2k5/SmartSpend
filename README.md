@@ -69,6 +69,11 @@ npm build
 That is how the website is currently deployed at github pages.
 
 
+# Production Deployment
+Change the Backend API URL for axios here: [apiutils.js#L6](https://github.com/FrosT2k5/SmartSpend/blob/master/src/api/apiutils.js#L6)
+
+And configure CORS for your frontend URL here: [backend/app.js#L19](https://github.com/FrosT2k5/SmartSpend_Backend/blob/master/app.js#L19)
+
 # Preview
 
 Wan't to check out our prehosted instance? There you go: https://frost2k5.is-a.dev/SmartSpend.
