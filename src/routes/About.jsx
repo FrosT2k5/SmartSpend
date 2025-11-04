@@ -11,6 +11,25 @@ const About = () => {
                 <h4>Here you can find information about who we are and what we do.</h4>
             </div>
 
+            <div className={ `${classes.largeBoxShort} ${classes.textCenter} ` }>
+                <h3 className={classes.textBold}>Source Code</h3>
+                <h4 className={classes.mt2}>The place where the magic lies and goodness forge.</h4>
+                <div className={classes.mt2}>
+                    <a 
+                    className={classes.mt2} style={{display: "block"}}
+                    href='https://github.com/FrosT2k5/SmartSpend_Backend'
+                    target='_blank'>
+                        <button style={{"width": "25%"}}>Backend Source</button>
+                    </a>
+                    <a 
+                    className={classes.mt2} 
+                    style={{display: "block"}}
+                    href='https://github.com/FrosT2k5/SmartSpend_Backend'
+                    target='_blank'>
+                        <button style={{"width": "25%"}}>Frontend Source</button>
+                    </a>
+                </div>
+            </div>
             <div className={`${classes.smallBox} ${classes.selfCenter}`}>
                 <img src={yashImageUrl} width="30%" />
                 <h4 className={classes.textBold}>Yash Patil</h4>

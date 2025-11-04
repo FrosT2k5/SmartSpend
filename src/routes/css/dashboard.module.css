@@ -149,6 +149,11 @@
     grid-column: span 12;
     grid-row: span 5;
 }
+
+.largeBoxShort {
+    grid-column: span 12;
+    grid-row: span 2;
+}
 /* .navLink:active {
     background-color: #7543EE;
 } */
@@ -262,4 +267,12 @@ form p {
 .selfCenter {
     align-self: center;
     text-align: center;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.mt2 {
+    margin-top: 10px !important;
 }
